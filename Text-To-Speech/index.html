@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test reader</title>
+	<!--<script type="text/javascript" src="responsivevoice.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+	
+	<script type="text/javascript">
+		var readOut=function(){
+			var text=document.getElementById('content').value;
+			responsiveVoice.speak(text, "US English Female");
+		}
+	</script>
+</head>
+<body>
+<div style="text-align: center;">
+<div class="col-md-12">
+<h1 style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Responsive Voice Text-To-Speech</h1>
+<textarea id="content" class="form-control" rows="5" cols="40"></textarea>
+</div>
+<br/>
+<br/>
+<br/>
+<button onclick="readOut()" class="btn btn-primary">Read</button>
+</div>
+</body>
+</html>
