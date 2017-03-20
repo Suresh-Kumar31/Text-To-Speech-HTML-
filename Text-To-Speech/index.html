@@ -11,9 +11,21 @@
 	<script type="text/javascript">
 		var readApp=angular.module('readApp',[]);
 		readApp.controller('readControler', function($scope){
+
+			//Voice options
+			$scope.voices=["UK English Female","UK English Male","US English Female"];
+			$scope.selectedVoice="UK English Female";
+
+			//Read function
 			$scope.readFunction=function(){
 			var text=document.getElementById('content').value;
-			responsiveVoice.speak(text, "US English Female");
+			responsiveVoice.speak(text, $scope.selectedVoice);
+		};
+			//Change voice
+			$scope.changeVoice=function(){
+			responsiveVoice.cancel();
+			var text=document.getElementById('content').value;
+			responsiveVoice.speak(text, $scope.voices[$scope.selectedIndex]);
 		};
 	}
 	)
@@ -28,9 +40,14 @@
 </head>
 <body ng-app="readApp">
 <div ng-controller="readControler" style="text-align: center;">
+<div>
+	<select  ng-change="changeVoice()" ng-model="selectedVoice">
+		<option ng-repeat="option in voices">{{option}}</option>
+	</select>
+</div>
 <div class="col-md-12">
 <h1 style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Responsive Voice Text-To-Speech</h1>
-<textarea id="content" class="form-control" rows="5" cols="40"></textarea>
+<textarea id="content" class="form-control" rows="5" cols="40" style="margin-bottom: 20px"></textarea>
 </div>
 <br/>
 <br/>
