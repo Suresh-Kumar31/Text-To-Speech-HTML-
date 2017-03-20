@@ -27,6 +27,14 @@
 			var text=document.getElementById('content').value;
 			responsiveVoice.speak(text, $scope.voices[$scope.selectedIndex]);
 		};
+		//Pause
+		$scope.pause=function(){
+			responsiveVoice.pause();
+		};
+		//Resume
+		$scope.resume=function(){
+			responsiveVoice.resume();
+		}
 	}
 	)
 
@@ -40,19 +48,42 @@
 </head>
 <body ng-app="readApp">
 <div ng-controller="readControler" style="text-align: center;">
-<div>
-	<select  ng-change="changeVoice()" ng-model="selectedVoice">
+<div class="col-md-8 col-md-offset-2">
+<h1 style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Responsive Voice Text-To-Speech</h1>
+<textarea id="content" class="form-control" rows="15" cols="40" style="margin-bottom: 20px"></textarea>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<button ng-click="readFunction()" class="btn btn-primary" style="margin-bottom: 20px">Read</button>
+<div style="margin-bottom: 20px">
+<button ng-click="pause()" class="btn btn-danger">PAUSE</button>
+<button ng-click="resume()" class="btn btn-success">PLAY</button>
+</div>
+<div class="col-md-4 col-md-offset-4">
+	<select  ng-change="changeVoice()" ng-model="selectedVoice" class="form-control">
 		<option ng-repeat="option in voices">{{option}}</option>
 	</select>
 </div>
-<div class="col-md-12">
-<h1 style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Responsive Voice Text-To-Speech</h1>
-<textarea id="content" class="form-control" rows="5" cols="40" style="margin-bottom: 20px"></textarea>
-</div>
-<br/>
-<br/>
-<br/>
-<button ng-click="readFunction()" class="btn btn-primary">Read</button>
 </div>
 </body>
 </html>
