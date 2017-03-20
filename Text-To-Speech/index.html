@@ -3,19 +3,31 @@
 <head>
 	<title>Test reader</title>
 	<!--<script type="text/javascript" src="responsivevoice.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 	<script type="text/javascript">
+		var readApp=angular.module('readApp',[]);
+		readApp.controller('readControler', function($scope){
+			$scope.readFunction=function(){
+			var text=document.getElementById('content').value;
+			responsiveVoice.speak(text, "US English Female");
+		};
+	}
+	)
+
+	</script>
+	<!-- <script type="text/javascript">
 		var readOut=function(){
 			var text=document.getElementById('content').value;
 			responsiveVoice.speak(text, "US English Female");
 		}
-	</script>
+	</script> -->
 </head>
-<body>
-<div style="text-align: center;">
+<body ng-app="readApp">
+<div ng-controller="readControler" style="text-align: center;">
 <div class="col-md-12">
 <h1 style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Responsive Voice Text-To-Speech</h1>
 <textarea id="content" class="form-control" rows="5" cols="40"></textarea>
@@ -23,7 +35,7 @@
 <br/>
 <br/>
 <br/>
-<button onclick="readOut()" class="btn btn-primary">Read</button>
+<button ng-click="readFunction()" class="btn btn-primary">Read</button>
 </div>
 </body>
 </html>
