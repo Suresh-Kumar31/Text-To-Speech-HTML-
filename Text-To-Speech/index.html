@@ -15,72 +15,54 @@
 			//Voice options
 			$scope.voices=["UK English Female","UK English Male","US English Female"];
 			$scope.selectedVoice="UK English Female";
+			$scope.isPlaying=false;
+			$scope.textToRead=null;
+			$scope.readOrRestart='READ';
 
 			//Read function
 			$scope.readFunction=function(){
-			var text=document.getElementById('content').value;
+			$scope.readOrRestart='RESTART';
+			$scope.isPlaying=true;
+			var text=$scope.textToRead;
 			responsiveVoice.speak(text, $scope.selectedVoice);
+			//$scope.textToRead=null;
 		};
 			//Change voice
 			$scope.changeVoice=function(){
 			responsiveVoice.cancel();
-			var text=document.getElementById('content').value;
+			var text=$scope.textToRead;
 			responsiveVoice.speak(text, $scope.voices[$scope.selectedIndex]);
 		};
 		//Pause
 		$scope.pause=function(){
+			$scope.isPlaying=false;
 			responsiveVoice.pause();
 		};
 		//Resume
 		$scope.resume=function(){
+			$scope.isPlaying=true;
 			responsiveVoice.resume();
-		}
+		};
 	}
 	)
 
 	</script>
-	<!-- <script type="text/javascript">
-		var readOut=function(){
-			var text=document.getElementById('content').value;
-			responsiveVoice.speak(text, "US English Female");
-		}
-	</script> -->
 </head>
 <body ng-app="readApp">
 <div ng-controller="readControler" style="text-align: center;">
 <div class="col-md-8 col-md-offset-2">
 <h1 style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Responsive Voice Text-To-Speech</h1>
-<textarea id="content" class="form-control" rows="15" cols="40" style="margin-bottom: 20px"></textarea>
+<textarea id="content" class="form-control" rows="15" cols="40" style="margin-bottom: 20px" ng-change="contentReady()" ng-model="textToRead"></textarea>
 </div>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<button ng-click="readFunction()" class="btn btn-primary" style="margin-bottom: 20px">Read</button>
+<div class="col-md-12">
+<button ng-click="readFunction()" class="btn btn-primary" style="margin-bottom: 20px" ng-model="readOrRestart" ng-disabled="textToRead==null">{{readOrRestart}}</button>
 <div style="margin-bottom: 20px">
-<button ng-click="pause()" class="btn btn-danger">PAUSE</button>
-<button ng-click="resume()" class="btn btn-success">PLAY</button>
+<button ng-click="pause()" ng-disabled="!isPlaying" class="btn btn-danger">PAUSE</button>
+<button ng-click="resume()" ng-disabled="isPlaying" class="btn btn-success">PLAY</button>
+</div>
 </div>
 <div class="col-md-4 col-md-offset-4">
-	<select  ng-change="changeVoice()" ng-model="selectedVoice" class="form-control">
+	<select ng-model="selectedVoice" class="form-control">
 		<option ng-repeat="option in voices">{{option}}</option>
 	</select>
 </div>
