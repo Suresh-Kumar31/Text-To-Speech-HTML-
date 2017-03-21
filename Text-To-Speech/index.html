@@ -18,20 +18,22 @@
 			$scope.isPlaying=false;
 			$scope.textToRead=null;
 			$scope.readOrRestart='READ';
+			$scope.disablePauseResume=true;
+			$scope.textPlaceHolder="Hey there! Please enter the text you want me to read...";
 
 			//Read function
 			$scope.readFunction=function(){
 			$scope.readOrRestart='RESTART';
 			$scope.isPlaying=true;
 			var text=$scope.textToRead;
-			responsiveVoice.speak(text, $scope.selectedVoice);
+			responsiveVoice.speak(text, $scope.selectedVoice,{onstart:onStartCallback()});
 			//$scope.textToRead=null;
 		};
 			//Change voice
 			$scope.changeVoice=function(){
 			responsiveVoice.cancel();
 			var text=$scope.textToRead;
-			responsiveVoice.speak(text, $scope.voices[$scope.selectedIndex]);
+			responsiveVoice.speak(text, $scope.voices[$scope.selectedIndex],{onStart:onStartCallback()});
 		};
 		//Pause
 		$scope.pause=function(){
@@ -43,6 +45,14 @@
 			$scope.isPlaying=true;
 			responsiveVoice.resume();
 		};
+		//Callbacks
+		var onStartCallback=function(){
+			$scope.disablePauseResume=false;
+		};
+		/*var onEndCallback=function(){
+			$scope.disablePauseResume=true;
+			$scope.textToRead="I'm done!! Please enter next content here...";
+		}*/
 	}
 	)
 
@@ -52,13 +62,13 @@
 <div ng-controller="readControler" style="text-align: center;">
 <div class="col-md-8 col-md-offset-2">
 <h1 style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif">Responsive Voice Text-To-Speech</h1>
-<textarea id="content" class="form-control" rows="15" cols="40" style="margin-bottom: 20px" ng-change="contentReady()" ng-model="textToRead"></textarea>
+<textarea id="content" class="form-control" rows="15" cols="40" style="margin-bottom: 20px" placeholder="Hey there! Please enter the text you want me to read..." ng-change="contentReady()" ng-model="textToRead"></textarea>
 </div>
 <div class="col-md-12">
 <button ng-click="readFunction()" class="btn btn-primary" style="margin-bottom: 20px" ng-model="readOrRestart" ng-disabled="textToRead==null">{{readOrRestart}}</button>
 <div style="margin-bottom: 20px">
-<button ng-click="pause()" ng-disabled="!isPlaying" class="btn btn-danger">PAUSE</button>
-<button ng-click="resume()" ng-disabled="isPlaying" class="btn btn-success">PLAY</button>
+<button ng-click="pause()" ng-disabled="!isPlaying || disablePauseResume" class="btn btn-danger">PAUSE</button>
+<button ng-click="resume()" ng-disabled="isPlaying ||  disablePauseResume" class="btn btn-success">PLAY</button>
 </div>
 </div>
 <div class="col-md-4 col-md-offset-4">
